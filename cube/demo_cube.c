@@ -87,7 +87,6 @@ GLushort indices[] = {0, 2, 3, 0, 1, 3, 4, 6, 7, 4, 5, 7, 8, 9, 10, 11, 8, 10, 1
 
 #ifdef es32
 static const char glVertexShader[] =
-		"#version 320\n"
 		"attribute vec4 vPosition;\n"
 		"void main()\n"
 		"{\n"
@@ -95,7 +94,6 @@ static const char glVertexShader[] =
 		"}\n";
 
 static const char glFragmentShader[] =
-		"#version 320\n"
 		"precision mediump float;\n"
 		"void main()\n"
 		"{\n"

@@ -23,7 +23,6 @@ GLuint vPosition;
 
 #ifdef es32
 static const char glVertexShader[] =
-		"#version 320\n"
         "attribute vec4 vPosition;\n"
         "void main()\n"
         "{\n"
@@ -31,7 +30,6 @@ static const char glVertexShader[] =
         "}\n";
 
 static const char glFragmentShader[] =
-		"#version 320\n"
         "precision mediump float;\n"
         "void main()\n"
         "{\n"
@@ -39,7 +37,7 @@ static const char glFragmentShader[] =
         "}\n";
 #else
 static const char glVertexShader[] =
-		"#version 330\n"
+	"#version 330\n"
         "attribute vec4 vPosition;\n"
         "void main()\n"
         "{\n"
@@ -47,7 +45,7 @@ static const char glVertexShader[] =
         "}\n";
 
 static const char glFragmentShader[] =
-		"#version 330\n"
+	"#version 330\n"
         "precision mediump float;\n"
         "void main()\n"
         "{\n"

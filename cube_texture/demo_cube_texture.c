@@ -131,7 +131,6 @@ GLuint loadSimpleTexture(){
    
 #ifdef es32
 static const char glVertexShader[] =
-		"#version 320\n"
 		"attribute vec4 vertexPosition;\n"
 		"attribute vec2 vertexTextureCord;\n"
 		"varying vec2 textureCord;\n"
@@ -144,7 +143,6 @@ static const char glVertexShader[] =
 		"}\n";
 
 static const char glFragmentShader[] =
-		"#version 320\n"
 		"precision mediump float;\n"
 		"uniform sampler2D texture;\n"
 		"varying vec2 textureCord;\n"
