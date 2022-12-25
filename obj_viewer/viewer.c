@@ -20,6 +20,8 @@
 #include <SDL.h>
 #include "trackball.h"
 
+#define DEAD_ZONE 9999
+
 void gluLookAt(GLdouble eyeX,GLdouble eyeY,GLdouble eyeZ,GLdouble centerX,GLdouble centerY,GLdouble centerZ,GLdouble upX,GLdouble upY,GLdouble upZ);
 void gluPerspective(GLdouble fovy,GLdouble aspect,GLdouble zNear,GLdouble zFar);
 
@@ -587,11 +589,16 @@ int main(int argc, char ** argv) {
                     }
                     break;
 				case SDL_JOYBUTTONUP:
-					if (event.jbutton.button == 9) {
+					if (event.jbutton.button == 7 || event.jbutton.button == 6) {
                         exit = 1;
-                    }else{
-						printf("Joy button: %d\n", event.jbutton.button);
+                    }else if (event.jbutton.button == 4){
+						eye[2] += 2.0f * ((float) 200 - 280) / (float) HEIGHT;
+						lookat[2] += 2.0f * ((float) 200 - 280) / (float) HEIGHT;
+					}else if (event.jbutton.button == 5){
+						eye[2] += 2.0f * ((float) 280 - 200) / (float) HEIGHT;
+						lookat[2] += 2.0f * ((float) 280 - 200) / (float) HEIGHT;
 					}
+					printf("Joy button: %d\n", event.jbutton.button);
                     break;
 				case SDL_MOUSEBUTTONDOWN:
 					if (event.button.button == SDL_BUTTON_LEFT) {
@@ -621,7 +628,6 @@ int main(int argc, char ** argv) {
 							rotScale * (HEIGHT - 2.0f * prevMouseY) / (float) HEIGHT,
 							rotScale * (2.0f * (float) event.motion.x - WIDTH) / (float) WIDTH,
 							rotScale * (HEIGHT - 2.0f * (float) event.motion.y) / (float) HEIGHT);
-
 						add_quats(prev_quat, curr_quat, curr_quat);
 					} else if (mouseMiddlePressed) {
 						eye[0] -= transScale * ((float) event.motion.x - prevMouseX) / (float) WIDTH;
@@ -635,6 +641,59 @@ int main(int argc, char ** argv) {
 
 					prevMouseX = (float) event.motion.x;
 					prevMouseY = (float) event.motion.y;
+				case SDL_JOYAXISMOTION:
+					if (event.jaxis.axis == 0){
+						if (event.jaxis.value < -DEAD_ZONE){
+							eye[0] -= transScale * ((float) -20) / (float) WIDTH;
+							lookat[0] -= transScale * ((float) -20) / (float) WIDTH;
+						}else if (event.jaxis.value > DEAD_ZONE){
+							eye[0] -= transScale * ((float) 20) / (float) WIDTH;
+							lookat[0] -= transScale * ((float) 20) / (float) WIDTH;
+						}
+					}else if (event.jaxis.axis == 1){
+						if (event.jaxis.value < -DEAD_ZONE){
+							eye[1] += transScale * ((float) -10) / (float) HEIGHT;
+							lookat[1] += transScale * ((float) -10) / (float) HEIGHT;
+						}else if (event.jaxis.value > DEAD_ZONE){
+							eye[1] += transScale * ((float) 10) / (float) HEIGHT;
+							lookat[1] += transScale * ((float) 10) / (float) HEIGHT;
+						}
+					}
+					if (event.jaxis.axis == 2){
+						if (event.jaxis.value < -DEAD_ZONE){
+							trackball(prev_quat, 0.0, 0.0, 0.0, 0.0);
+							trackball(prev_quat, rotScale * (2.0f * 300 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * 240) / (float) HEIGHT,
+								rotScale * (2.0f * (float) 340 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * (float) 240) / (float) HEIGHT);
+							add_quats(prev_quat, curr_quat, curr_quat);
+						}else if (event.jaxis.value > DEAD_ZONE){
+							trackball(prev_quat, 0.0, 0.0, 0.0, 0.0);
+							trackball(prev_quat, rotScale * (2.0f * 340 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * 240) / (float) HEIGHT,
+								rotScale * (2.0f * (float) 300 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * (float) 240) / (float) HEIGHT);
+							add_quats(prev_quat, curr_quat, curr_quat);
+						}
+					}else if (event.jaxis.axis == 3){
+						if (event.jaxis.value < -DEAD_ZONE){
+							trackball(prev_quat, 0.0, 0.0, 0.0, 0.0);
+							trackball(prev_quat, rotScale * (2.0f * 320 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * 280) / (float) HEIGHT,
+								rotScale * (2.0f * (float) 320 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * (float) 200) / (float) HEIGHT);
+							add_quats(prev_quat, curr_quat, curr_quat);
+						}else if (event.jaxis.value > DEAD_ZONE){
+							trackball(prev_quat, 0.0, 0.0, 0.0, 0.0);
+							trackball(prev_quat, rotScale * (2.0f * 320 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * 200) / (float) HEIGHT,
+								rotScale * (2.0f * (float) 320 - WIDTH) / (float) WIDTH,
+								rotScale * (HEIGHT - 2.0f * (float) 280) / (float) HEIGHT);
+							add_quats(prev_quat, curr_quat, curr_quat);
+						}
+					}
+					
+					break;
 				default:
                     break;
             }

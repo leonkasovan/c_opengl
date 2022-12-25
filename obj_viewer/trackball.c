@@ -139,7 +139,7 @@ void trackball(float q[4], float p1x, float p1y, float p2x, float p2y) {
   float phi;  /* how much to rotate about axis */
   float p1[3], p2[3], d[3];
   float t;
-
+  
   if (p1x == p2x && p1y == p2y) {
     /* Zero rotation */
     vzero(q);

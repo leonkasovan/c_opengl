@@ -7,7 +7,8 @@ LDFLAGS=-L../glad/gles3.2/src -lGL -lGLU -lm -pthread -ldl `pkg-config --libs sd
 CFLAGS=-I../glad/gles3.2/include -Wall -Wextra -Wshadow -Wformat=2 -pedantic -std=c99 -O2 -g `pkg-config --cflags sdl2`
 CC=gcc
 else
-LDFLAGS=-lm -pthread -ldl -lglu32 `pkg-config --libs sdl2`
+#LDFLAGS=-lm -pthread -ldl -lglu32 `pkg-config --libs sdl2`
+LDFLAGS=-lm -pthread -ldl -lglu32 -LC:/msys64/mingw64/lib -lmingw32 -lSDL2main -lSDL2
 CFLAGS=-I../glad/gl3.0a/include -Wformat=2 -std=c99 -O2 -g `pkg-config --cflags sdl2`
 CC=gcc
 endif
