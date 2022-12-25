@@ -1,8 +1,16 @@
+/*
+sudo apt install libgbm-dev libdrm-dev
+libxcb-xf86dri0-dev
+x11proto-xf86dri-dev
+*/
+
+#include <io.h>
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
 #include <gbm.h>
 #include <xf86drm.h>
 #include <xf86drmMode.h>
+
 
 int main() {
   // Open a connection to the DRM device
